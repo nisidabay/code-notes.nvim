@@ -61,6 +61,34 @@ vim.keymap.set('n', '<leader>nd9', '<cmd>lua require("code_notes").remove_note(9
 vim.keymap.set('n', '<leader>nl',  '<cmd>lua require("code_notes").list_notes()<CR>')
 ```
 
+### Optional: WhichKey Integration
+
+If you use [`which-key.nvim`](https://github.com/folke/which-key.nvim), add this to your config to ensure all note mappings appear under `<leader>n`:
+
+```lua
+-- Register code_notes mappings with WhichKey
+local wk = require("which-key")
+wk.register({
+    n = {
+        name = "+notes",
+        ["1"] = { "<cmd>lua require('code_notes').jump_to_note(1)<CR>", "Jump to note 1" },
+        ["2"] = { "<cmd>lua require('code_notes').jump_to_note(2)<CR>", "Jump to note 2" },
+        ["3"] = { "<cmd>lua require('code_notes').jump_to_note(3)<CR>", "Jump to note 3" },
+        ["4"] = { "<cmd>lua require('code_notes').jump_to_note(4)<CR>", "Jump to note 4" },
+        ["5"] = { "<cmd>lua require('code_notes').jump_to_note(5)<CR>", "Jump to note 5" },
+        ["6"] = { "<cmd>lua require('code_notes').jump_to_note(6)<CR>", "Jump to note 6" },
+        ["7"] = { "<cmd>lua require('code_notes').jump_to_note(7)<CR>", "Jump to note 7" },
+        ["8"] = { "<cmd>lua require('code_notes').jump_to_note(8)<CR>", "Jump to note 8" },
+        ["9"] = { "<cmd>lua require('code_notes').jump_to_note(9)<CR>", "Jump to note 9" },
+        a = { "<cmd>lua require('code_notes').add_note()<CR>", "Add note" },
+        l = { "<cmd>lua require('code_notes').list_notes()<CR>", "List all notes" },
+        d = { "<cmd>lua require('code_notes').remove_note(vim.v.count)<CR>", "Delete note" },
+    },
+}, { prefix = "<leader>" })
+```
+
+> 💡 This ensures WhichKey always shows your note mappings — even after restarts.
+
 ## Commands
 
 - `:CodeNotesList` — same as `<leader>nl`
