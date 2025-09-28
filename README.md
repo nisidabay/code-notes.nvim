@@ -23,46 +23,22 @@ sync my dotfiles with GNU Stow.
 ## Install
 
 ### [lazy.nvim](https://github.com/folke/lazy.nvim)
-In your Neovim configuration (usually ~/.config/nvim/lua/plugins.lua or
-similar), add this entry to your plugin list: 
-
-💡 The keys table only enables lazy-loading — you still need to define the actual keymaps (see Usage below). 
+In your Neovim configuration (usually `~/.config/nvim/lua/plugins.lua`), add:
 
 ```lua
 {
-  'nisidabay/code-notes.nvim',
-  -- Optional: lazy-load on keymaps
-  keys = {
-    { '<leader>na',  mode = 'n', desc = 'Add note' },
-    { '<leader>n1',  mode = 'n', desc = 'Jump to note 1' },
-    { '<leader>n2',  mode = 'n', desc = 'Jump to note 2' },
-    { '<leader>n3',  mode = 'n', desc = 'Jump to note 3' },
-    { '<leader>n4',  mode = 'n', desc = 'Jump to note 4' },
-    { '<leader>n5',  mode = 'n', desc = 'Jump to note 5' },
-    { '<leader>n6',  mode = 'n', desc = 'Jump to note 6' },
-    { '<leader>n7',  mode = 'n', desc = 'Jump to note 7' },
-    { '<leader>n8',  mode = 'n', desc = 'Jump to note 8' },
-    { '<leader>n9',  mode = 'n', desc = 'Jump to note 9' },
-    { '<leader>nd1', mode = 'n', desc = 'Delete note 1' },
-    { '<leader>nd2', mode = 'n', desc = 'Delete note 2' },
-    { '<leader>nd3', mode = 'n', desc = 'Delete note 3' },
-    { '<leader>nd4', mode = 'n', desc = 'Delete note 4' },
-    { '<leader>nd5', mode = 'n', desc = 'Delete note 5' },
-    { '<leader>nd6', mode = 'n', desc = 'Delete note 6' },
-    { '<leader>nd7', mode = 'n', desc = 'Delete note 7' },
-    { '<leader>nd8', mode = 'n', desc = 'Delete note 8' },
-    { '<leader>nd9', mode = 'n', desc = 'Delete note 9' },
-    { '<leader>nl',  mode = 'n', desc = 'List all notes' },
-  }
+  'nisidabay/code-notes.nvim'
 }
 ```
 
+> 💡 This plugin **does not set any keymaps** — you define your own (see below).
+
 ## Usage
 
-This plugin does not create mappings — you choose your own. Example:
+Add these mappings to your keymap config (e.g., `keymaps.lua`):
 
 ```lua
--- In your keymaps config
+-- Code Notes
 vim.keymap.set('n', '<leader>na',  '<cmd>lua require("code_notes").add_note()<CR>')
 vim.keymap.set('n', '<leader>n1',  '<cmd>lua require("code_notes").jump_to_note(1)<CR>')
 vim.keymap.set('n', '<leader>n2',  '<cmd>lua require("code_notes").jump_to_note(2)<CR>')
