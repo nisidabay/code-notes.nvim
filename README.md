@@ -35,7 +35,9 @@ This plugin solves that problem.
 
 ## Installation
 
-### [lazy.nvim](https://github.com/folke/lazy.nvim)
+### [lazy.nvim](https://github.com/folke/lazy.nvim) (Recommended)
+
+Add this to your plugin configuration (usually `~/.config/nvim/lua/plugins.lua`):
 
 ```lua
 {
@@ -43,10 +45,28 @@ This plugin solves that problem.
   dependencies = {
     'nvim-telescope/telescope.nvim',
   },
+  lazy = false,  -- Load immediately at startup
+  priority = 50, -- Load after dependencies
+  config = function()
+    -- Keymaps
+    local notes = require("code_notes")
+    vim.keymap.set('n', '<leader>na', notes.add_note, { desc = "Add code note" })
+    vim.keymap.set('n', '<leader>nl', notes.list_notes, { desc = "List code notes" })
+    vim.keymap.set('n', '<leader>nd', notes.delete_notes, { desc = "Delete notes" })
+    vim.keymap.set('n', '<leader>nC', notes.clear_all_notes, { desc = "Clear ALL notes" })
+  end,
 }
 ```
 
+The plugin will automatically create the following commands:
+- `:CodeNotesAdd`
+- `:CodeNotesList`
+- `:CodeNotesDelete`
+- `:CodeNotesClear`
+
 ### [packer.nvim](https://github.com/wbthomason/packer.nvim)
+
+Add to your plugin configuration:
 
 ```lua
 use {
@@ -54,30 +74,39 @@ use {
   requires = {
     'nvim-telescope/telescope.nvim',
   },
+  config = function()
+    -- Keymaps
+    local notes = require("code_notes")
+    vim.keymap.set('n', '<leader>na', notes.add_note, { desc = "Add code note" })
+    vim.keymap.set('n', '<leader>nl', notes.list_notes, { desc = "List code notes" })
+    vim.keymap.set('n', '<leader>nd', notes.delete_notes, { desc = "Delete notes" })
+    vim.keymap.set('n', '<leader>nC', notes.clear_all_notes, { desc = "Clear ALL notes" })
+  end,
 }
 ```
+
+Then run `:PackerSync`
 
 > 💡 This plugin **does not set any keymaps** — you define your own workflow.
 
 ## Usage
 
-### Recommended Keymaps
+### Alternative Keymap Configuration
 
-Add these mappings to your keymap config:
+If you prefer to define keymaps separately from your plugin configuration, you can add them to your keymap file (e.g., `~/.config/nvim/lua/config/mappings.lua`):
 
 ```lua
 local notes = require("code_notes")
 
--- Core operations
 vim.keymap.set('n', '<leader>na', notes.add_note, { desc = "Add code note" })
 vim.keymap.set('n', '<leader>nl', notes.list_notes, { desc = "List code notes" })
-vim.keymap.set('n', '<leader>nd', notes.delete_notes, { desc = "Delete notes (interactive)" })
-
--- Optional: Clear all notes (use with caution - requires confirmation)
+vim.keymap.set('n', '<leader>nd', notes.delete_notes, { desc = "Delete notes" })
 vim.keymap.set('n', '<leader>nC', notes.clear_all_notes, { desc = "Clear ALL notes" })
 ```
 
-### Optional: WhichKey Integration
+### Alternative: WhichKey Integration
+
+If you use [`which-key.nvim`](https://github.com/folke/which-key.nvim), you can set up keymaps this way instead:
 
 ```lua
 local wk = require("which-key")
@@ -91,6 +120,8 @@ wk.register({
     },
 }, { prefix = "<leader>" })
 ```
+
+**Note:** If using WhichKey, you may want to remove the keymaps from the plugin config to avoid duplication.
 
 ## Features
 
@@ -211,7 +242,7 @@ For convenience, the plugin creates these commands:
 
 **Concise content** should be:
 - Short (one line)
-
+- Descriptive enough to recognize later
 - Action-oriented when possible
 
 Examples:
@@ -250,6 +281,18 @@ This plugin follows these principles:
 5. **Data ownership** - Your notes in a simple, portable format you control
 
 ## Troubleshooting
+
+### Commands not working after installation
+
+If the `:CodeNotesList` command doesn't exist after installation, make sure you have `lazy = false` in your plugin config. This ensures the plugin loads immediately at startup instead of being lazy-loaded.
+
+```lua
+{
+  'nisidabay/code-notes.nvim',
+  lazy = false,  -- Important: Don't lazy-load
+  -- ... rest of config
+}
+```
 
 ### Notes aren't saving
 
