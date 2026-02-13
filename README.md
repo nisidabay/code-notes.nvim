@@ -211,7 +211,7 @@ For convenience, the plugin creates these commands:
 
 **Concise content** should be:
 - Short (one line)
-- Descriptive enough to recognize later
+
 - Action-oriented when possible
 
 Examples:
